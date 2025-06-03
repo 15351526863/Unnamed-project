@@ -156,8 +156,32 @@ bool CONVAR::Setup()
 	mp_teammates_are_enemies = I::Cvar->Find(FNV1A::HashConst("mp_teammates_are_enemies"));
 	bSuccess &= mp_teammates_are_enemies != nullptr;
 
-	sv_autobunnyhopping = I::Cvar->Find(FNV1A::HashConst("sv_autobunnyhopping"));
-	bSuccess &= sv_autobunnyhopping != nullptr;
+        sv_autobunnyhopping = I::Cvar->Find(FNV1A::HashConst("sv_autobunnyhopping"));
+        bSuccess &= sv_autobunnyhopping != nullptr;
+
+        cam_idealdist = I::Cvar->Find(FNV1A::HashConst("cam_idealdist"));
+        bSuccess &= cam_idealdist != nullptr;
+
+        cam_collision = I::Cvar->Find(FNV1A::HashConst("cam_collision"));
+        bSuccess &= cam_collision != nullptr;
+
+        cam_snapto = I::Cvar->Find(FNV1A::HashConst("cam_snapto"));
+        bSuccess &= cam_snapto != nullptr;
+
+        c_thirdpersonshoulder = I::Cvar->Find(FNV1A::HashConst("c_thirdpersonshoulder"));
+        bSuccess &= c_thirdpersonshoulder != nullptr;
+
+        c_thirdpersonshoulderaimdist = I::Cvar->Find(FNV1A::HashConst("c_thirdpersonshoulderaimdist"));
+        bSuccess &= c_thirdpersonshoulderaimdist != nullptr;
+
+        c_thirdpersonshoulderdist = I::Cvar->Find(FNV1A::HashConst("c_thirdpersonshoulderdist"));
+        bSuccess &= c_thirdpersonshoulderdist != nullptr;
+
+        c_thirdpersonshoulderheight = I::Cvar->Find(FNV1A::HashConst("c_thirdpersonshoulderheight"));
+        bSuccess &= c_thirdpersonshoulderheight != nullptr;
+
+        c_thirdpersonshoulderoffset = I::Cvar->Find(FNV1A::HashConst("c_thirdpersonshoulderoffset"));
+        bSuccess &= c_thirdpersonshoulderoffset != nullptr;
 
 	return bSuccess;
 }

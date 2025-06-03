@@ -459,7 +459,10 @@ void T::Miscellaneous()
 
 			ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(style.FramePadding.x, 0));
 
-			ImGui::Checkbox(CS_XOR("watermark"), &C_GET(bool, Vars.bWatermark));
+                        ImGui::Checkbox(CS_XOR("watermark"), &C_GET(bool, Vars.bWatermark));
+                        ImGui::Checkbox(CS_XOR("thirdperson"), &C_GET(bool, Vars.bThirdperson));
+                        if (C_GET(bool, Vars.bThirdperson))
+                                ImGui::SliderFloat(CS_XOR("thirdperson distance"), &C_GET(float, Vars.flThirdperson), 0.f, 150.f);
 
 			ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.f, 1.f, 0.f, 1.f));
 			if (ImGui::Button(CS_XOR("unlock hidden cvars"), ImVec2(-1, 15 * MENU::flDpiScale)))

@@ -23,6 +23,8 @@
 
 // used: get virtual function, find pattern, ...
 #include "../utilities/memory.h"
+// used: math clamp
+#include "../utilities/math.h"
 // used: inputsystem
 #include "../utilities/inputsystem.h"
 // used: draw
@@ -286,11 +288,43 @@ __int64 CS_FASTCALL H::LevelShutdown(void* pClientModeShared)
 
 void CS_FASTCALL H::OverrideView(void* pClientModeCSNormal, CViewSetup* pSetup)
 {
-	const auto oOverrideView = hkOverrideView.GetOriginal();
-	if (!I::Engine->IsConnected() || !I::Engine->IsInGame())
-		return hkOverrideView.GetOriginal()(pClientModeCSNormal, pSetup);
+        const auto oOverrideView = hkOverrideView.GetOriginal();
+        if (!I::Engine->IsConnected() || !I::Engine->IsInGame())
+                return oOverrideView(pClientModeCSNormal, pSetup);
 
-	oOverrideView(pClientModeCSNormal, pSetup);
+        static float flProgress = 0.f;
+
+        if (C_GET(bool, Vars.bThirdperson))
+        {
+                auto bezier = [](float t)
+                {
+                        return t * t * (3.0f - 2.0f * t);
+                };
+
+                flProgress = MATH::Clamp(flProgress + I::GlobalVars->flFrameTime * 6.f,
+                                        40.f / C_GET(float, Vars.flThirdperson), 1.f);
+
+                CONVAR::cam_idealdist->value.fl =
+                        C_GET(float, Vars.flThirdperson) *
+                        (C_GET(bool, Vars.bThirdpersonNoInterp) ? 1.f : bezier(flProgress));
+
+                CONVAR::cam_collision->value.i1 = true;
+                CONVAR::cam_snapto->value.i1 = true;
+                CONVAR::c_thirdpersonshoulder->value.i1 = true;
+                CONVAR::c_thirdpersonshoulderaimdist->value.fl = 0.f;
+                CONVAR::c_thirdpersonshoulderdist->value.fl = 0.f;
+                CONVAR::c_thirdpersonshoulderheight->value.fl = 0.f;
+                CONVAR::c_thirdpersonshoulderoffset->value.fl = 0.f;
+
+                I::Input->bInThirdPerson = true;
+        }
+        else
+        {
+                flProgress = C_GET(bool, Vars.bThirdperson) ? 1.f : 0.f;
+                I::Input->bInThirdPerson = false;
+        }
+
+        oOverrideView(pClientModeCSNormal, pSetup);
 }
 
 void CS_FASTCALL H::DrawObject(void* pAnimatableSceneObjectDesc, void* pDx11, CMeshData* arrMeshDraw, int nDataCount, void* pSceneView, void* pSceneLayer, void* pUnk, void* pUnk2)
