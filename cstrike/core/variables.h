@@ -71,7 +71,11 @@ struct Variables_t
 	C_ADD_VARIABLE(bool, bAutoBHop, false);
 	C_ADD_VARIABLE(int, nAutoBHopChance, 100);
 
-	C_ADD_VARIABLE(bool, bAutoStrafe, false);
+        C_ADD_VARIABLE(bool, bAutoStrafe, false);
+
+        C_ADD_VARIABLE(bool, bThirdperson, false);
+        C_ADD_VARIABLE(float, flThirdperson, 90.0f);
+        C_ADD_VARIABLE(bool, bThirdpersonNoInterp, true);
 #pragma endregion
 
 #pragma region variables_menu
