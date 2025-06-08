@@ -42,6 +42,20 @@
 // used: menu
 #include "menu.h"
 
+static void* g_MotionBlurApplyPostCheck = nullptr;
+static void* g_PostBlurJumpAddr = nullptr;
+
+using MotionBlurFn = void(__fastcall*)(void*, unsigned int);
+
+static void ApplyMotionBlur(void* rcx, void*)
+{
+        if (g_PostBlurJumpAddr == nullptr)
+                return;
+
+        const auto fn = reinterpret_cast<MotionBlurFn>(g_PostBlurJumpAddr);
+        fn(rcx, 0xFFFFFFFFu);
+}
+
 bool H::Setup()
 {
 	if (MH_Initialize() != MH_OK)
@@ -135,9 +149,18 @@ bool H::Setup()
 		return false;
 	L_PRINT(LOG_INFO) << CS_XOR("\"DrawObject\" hook has been created");
 
-	if (!hkIsRelativeMouseMode.Create(MEM::GetVFunc(I::InputSystem, VTABLE::INPUTSYSTEM::ISRELATIVEMOUSEMODE), reinterpret_cast<void*>(&IsRelativeMouseMode)))
-		return false;
-	L_PRINT(LOG_INFO) << CS_XOR("\"IsRelativeMouseMode\" hook has been created");
+        if (!hkIsRelativeMouseMode.Create(MEM::GetVFunc(I::InputSystem, VTABLE::INPUTSYSTEM::ISRELATIVEMOUSEMODE), reinterpret_cast<void*>(&IsRelativeMouseMode)))
+                return false;
+        L_PRINT(LOG_INFO) << CS_XOR("\"IsRelativeMouseMode\" hook has been created");
+
+        std::uint8_t* pBlurCheck = MEM::FindPattern(CLIENT_DLL, CS_XOR("48 55 56 41 57 48 8D 6C 24 ? 48 81 EC ? ? ? ? 80 B9 ? ? ? ? ?"));
+        if (pBlurCheck == nullptr)
+                return false;
+
+        g_MotionBlurApplyPostCheck = MEM::GetAbsoluteAddress(pBlurCheck + 0x33, 0x1);
+        if (!hkIsMotionBlurEnabled.Create(pBlurCheck, reinterpret_cast<void*>(&IsMotionBlurEnabled)))
+                return false;
+        L_PRINT(LOG_INFO) << CS_XOR("\"IsMotionBlurEnabled\" hook has been created");
 
 	return true;
 }
@@ -342,12 +365,19 @@ void CS_FASTCALL H::DrawObject(void* pAnimatableSceneObjectDesc, void* pDx11, CM
 
 void* H::IsRelativeMouseMode(void* pThisptr, bool bActive)
 {
-	const auto oIsRelativeMouseMode = hkIsRelativeMouseMode.GetOriginal();
+        const auto oIsRelativeMouseMode = hkIsRelativeMouseMode.GetOriginal();
 
 	MENU::bMainActive = bActive;
 
 	if (MENU::bMainWindowOpened)
 		return oIsRelativeMouseMode(pThisptr, false);
 
-	return oIsRelativeMouseMode(pThisptr, bActive);
+        return oIsRelativeMouseMode(pThisptr, bActive);
+}
+
+bool CS_FASTCALL H::IsMotionBlurEnabled(void* a1, void* a2, void* a3)
+{
+        g_PostBlurJumpAddr = g_MotionBlurApplyPostCheck;
+        ApplyMotionBlur(a3, a2);
+        return true;
 }
