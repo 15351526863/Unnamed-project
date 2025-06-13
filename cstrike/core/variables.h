@@ -25,12 +25,31 @@ using MiscDpiScale_t = int;
 
 enum EMiscDpiScale : MiscDpiScale_t
 {
-	MISC_DPISCALE_DEFAULT = 0,
-	MISC_DPISCALE_125,
-	MISC_DPISCALE_150,
-	MISC_DPISCALE_175,
-	MISC_DPISCALE_200,
-	MISC_DPISCALE_MAX
+        MISC_DPISCALE_DEFAULT = 0,
+        MISC_DPISCALE_125,
+        MISC_DPISCALE_150,
+        MISC_DPISCALE_175,
+        MISC_DPISCALE_200,
+        MISC_DPISCALE_MAX
+};
+
+using AntiAimYaw_t = int;
+enum EAntiAimYaw : AntiAimYaw_t
+{
+        ANTIAIM_YAW_NONE = 0,
+        ANTIAIM_YAW_BACKWARDS,
+        ANTIAIM_YAW_FORWARDS,
+        ANTIAIM_YAW_MAX
+};
+
+using AntiAimPitch_t = int;
+enum EAntiAimPitch : AntiAimPitch_t
+{
+        ANTIAIM_PITCH_NONE = 0,
+        ANTIAIM_PITCH_DOWN,
+        ANTIAIM_PITCH_UP,
+        ANTIAIM_PITCH_ZERO,
+        ANTIAIM_PITCH_MAX
 };
 
 #pragma endregion
@@ -111,10 +130,16 @@ struct Variables_t
 
 	C_ADD_VARIABLE(ColorPickerVar_t, colAccent0, ColorPickerVar_t(85, 90, 160)); // (main)
 	C_ADD_VARIABLE(ColorPickerVar_t, colAccent1, ColorPickerVar_t(100, 105, 175)); // (dark)
-	C_ADD_VARIABLE(ColorPickerVar_t, colAccent2, ColorPickerVar_t(115, 120, 190)); // (darker)
+        C_ADD_VARIABLE(ColorPickerVar_t, colAccent2, ColorPickerVar_t(115, 120, 190)); // (darker)
+#pragma endregion
+
+#pragma region variables_antiaim
+        C_ADD_VARIABLE(bool, bAntiAim, false);
+        C_ADD_VARIABLE(int, iBaseYawType, ANTIAIM_YAW_NONE);
+        C_ADD_VARIABLE(int, iPitchType, ANTIAIM_PITCH_NONE);
 #pragma endregion
 #pragma region variables_legitbot
-	C_ADD_VARIABLE(bool, bLegitbot, false);
+        C_ADD_VARIABLE(bool, bLegitbot, false);
 	C_ADD_VARIABLE(float, flAimRange, 10.0f);
 	C_ADD_VARIABLE(float, flSmoothing, 10.0f);
 	C_ADD_VARIABLE(bool, bLegitbotAlwaysOn, false);
