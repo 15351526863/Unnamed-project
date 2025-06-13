@@ -351,7 +351,21 @@ void T::Render(const char* szTabBar, const CTab* arrTabs, const unsigned long lo
 }
 
 void T::RageBot()
-{ }
+{
+        ImGui::BeginChild(CS_XOR("ragebot.anti_aim"), ImVec2{}, true, ImGuiWindowFlags_MenuBar);
+        {
+                if (ImGui::BeginMenuBar())
+                {
+                        ImGui::TextUnformatted(CS_XOR("anti-aim"));
+                        ImGui::EndMenuBar();
+                }
+
+                ImGui::Checkbox(CS_XOR("enable##antiaim"), &C_GET(bool, Vars.bAntiAim));
+                ImGui::Combo(CS_XOR("base yaw"), &C_GET(int, Vars.iBaseYawType), CS_XOR("none\0backwards\0forwards\0"));
+                ImGui::Combo(CS_XOR("pitch"), &C_GET(int, Vars.iPitchType), CS_XOR("none\0down\0up\0zero\0"));
+        }
+        ImGui::EndChild();
+}
 
 void T::LegitBot()
 {

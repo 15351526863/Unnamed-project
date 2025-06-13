@@ -43,6 +43,9 @@
     <Filter Include="features\legitbot">
       <UniqueIdentifier>{a0df371b-f244-4c53-b08d-762a0f9b6b0c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="features\anti_aim">
+      <UniqueIdentifier>{E1B6CC4F-E6E0-4F41-B4BB-0E3B8156DBAB}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\dependencies\imgui\imconfig.h">
@@ -320,11 +323,14 @@
     <ClInclude Include="features\legitbot\legitbot.h">
       <Filter>features</Filter>
     </ClInclude>
-    <ClInclude Include="features\legitbot\aim.h">
-      <Filter>features\legitbot</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
+  <ClInclude Include="features\legitbot\aim.h">
+    <Filter>features\legitbot</Filter>
+  </ClInclude>
+  <ClInclude Include="features\anti_aim\anti_aim.h">
+    <Filter>features\anti_aim</Filter>
+  </ClInclude>
+</ItemGroup>
+<ItemGroup>
     <ClCompile Include="..\dependencies\imgui\imgui.cpp">
       <Filter>dependencies\imgui</Filter>
     </ClCompile>
@@ -436,11 +442,14 @@
     <ClCompile Include="sdk\interfaces\cgametracemanager.cpp">
       <Filter>sdk\interfaces</Filter>
     </ClCompile>
-    <ClCompile Include="features\legitbot\aim.cpp">
-      <Filter>features\legitbot</Filter>
-    </ClCompile>
-    <ClCompile Include="features\legitbot.cpp">
-      <Filter>features</Filter>
-    </ClCompile>
-  </ItemGroup>
+  <ClCompile Include="features\legitbot\aim.cpp">
+    <Filter>features\legitbot</Filter>
+  </ClCompile>
+  <ClCompile Include="features\legitbot.cpp">
+    <Filter>features</Filter>
+  </ClCompile>
+  <ClCompile Include="features\anti_aim\anti_aim.cpp">
+    <Filter>features\anti_aim</Filter>
+  </ClCompile>
+</ItemGroup>
 </Project>
