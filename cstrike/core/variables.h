@@ -95,6 +95,7 @@ struct Variables_t
         C_ADD_VARIABLE(bool, bThirdperson, false);
         C_ADD_VARIABLE(float, flThirdperson, 90.0f);
         C_ADD_VARIABLE(bool, bThirdpersonNoInterp, true);
+        C_ADD_VARIABLE(unsigned int, nThirdpersonKey, 0U);
 #pragma endregion
 
 #pragma region variables_menu

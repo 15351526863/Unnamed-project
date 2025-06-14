@@ -477,6 +477,7 @@ void T::Miscellaneous()
                         ImGui::Checkbox(CS_XOR("thirdperson"), &C_GET(bool, Vars.bThirdperson));
                         if (C_GET(bool, Vars.bThirdperson))
                                 ImGui::SliderFloat(CS_XOR("thirdperson distance"), &C_GET(float, Vars.flThirdperson), 0.f, 150.f);
+                        ImGui::HotKey(CS_XOR("thirdperson key"), &C_GET(unsigned int, Vars.nThirdpersonKey));
 
 			ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.f, 1.f, 0.f, 1.f));
 			if (ImGui::Button(CS_XOR("unlock hidden cvars"), ImVec2(-1, 15 * MENU::flDpiScale)))
