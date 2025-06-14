@@ -7,6 +7,7 @@
 // used: overlay
 #include "visuals/overlay.h"
 #include "visuals/chams.h"
+#include "visuals/motionblur.h"
 
 #include "../core/sdk.h"
 
@@ -14,18 +15,25 @@ using namespace F;
 
 bool F::VISUALS::Setup()
 {
-	if (!CHAMS::Initialize())
-	{
-		L_PRINT(LOG_ERROR) << CS_XOR("failed to initialize chams");
-		return false;
-	}
+        if (!CHAMS::Initialize())
+        {
+                L_PRINT(LOG_ERROR) << CS_XOR("failed to initialize chams");
+                return false;
+        }
 
-	return true;
+        if (!MOTIONBLUR::Setup())
+        {
+                L_PRINT(LOG_ERROR) << CS_XOR("failed to setup motion blur");
+                return false;
+        }
+
+        return true;
 }
 
 void F::VISUALS::OnDestroy()
 {
-	CHAMS::Destroy();
+        CHAMS::Destroy();
+        MOTIONBLUR::Destroy();
 }
 
 void VISUALS::OnFrame(const int nStage)

@@ -84,8 +84,9 @@ namespace H
 	__int64* CS_FASTCALL LevelInit(void* pClientModeShared, const char* szNewMap);
 	__int64 CS_FASTCALL LevelShutdown(void* pClientModeShared);
 	void CS_FASTCALL OverrideView(void* pClientModeCSNormal, CViewSetup* pSetup);
-	void CS_FASTCALL DrawObject(void* pAnimatableSceneObjectDesc, void* pDx11, CMeshData* arrMeshDraw, int nDataCount, void* pSceneView, void* pSceneLayer, void* pUnk, void* pUnk2);
-	void* IsRelativeMouseMode(void* pThisptr, bool bActive);
+        void CS_FASTCALL DrawObject(void* pAnimatableSceneObjectDesc, void* pDx11, CMeshData* arrMeshDraw, int nDataCount, void* pSceneView, void* pSceneLayer, void* pUnk, void* pUnk2);
+        void* IsRelativeMouseMode(void* pThisptr, bool bActive);
+        bool CS_FASTCALL IsMotionBlurEnabled(void* a1, void* a2, void* a3);
 
 	/* @section: managers */
 	inline CBaseHookObject<decltype(&Present)> hkPresent = {};
@@ -96,8 +97,9 @@ namespace H
 	inline CBaseHookObject<decltype(&GetMatrixForView)> hkGetMatrixForView = {};
 	inline CBaseHookObject<decltype(&CreateMove)> hkCreateMove = {};
 	inline CBaseHookObject<decltype(&MouseInputEnabled)> hkMouseInputEnabled = {};
-	inline CBaseHookObject<decltype(&IsRelativeMouseMode)> hkIsRelativeMouseMode = {};
-	inline CBaseHookObject<decltype(&FrameStageNotify)> hkFrameStageNotify = {};
+        inline CBaseHookObject<decltype(&IsRelativeMouseMode)> hkIsRelativeMouseMode = {};
+        inline CBaseHookObject<decltype(&IsMotionBlurEnabled)> hkIsMotionBlurEnabled = {};
+        inline CBaseHookObject<decltype(&FrameStageNotify)> hkFrameStageNotify = {};
 	inline CBaseHookObject<decltype(&LevelInit)> hkLevelInit = {};
 	inline CBaseHookObject<decltype(&LevelShutdown)> hkLevelShutdown = {};
 	inline CBaseHookObject<decltype(&OverrideView)> hkOverrideView = {};
